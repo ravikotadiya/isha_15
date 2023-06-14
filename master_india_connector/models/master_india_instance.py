@@ -61,7 +61,7 @@ class MasterIndiaInstance(models.Model):
                 else:
                     error = result.get('error') or result
                     raise UserError(error)
-                error = result.get('error') or result.get('message', '')
+            error = result.get('error') or result.get('message', '')
             raise UserError(error)
 
     def make_request_and_get_response(self, file_path, create_token):

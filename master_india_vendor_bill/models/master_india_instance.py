@@ -5,43 +5,16 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
-ACCURACY_FIELD = ['invoice_date','supplier_gstin','supplier_name','pan_number','total_tax_amount','invoice_amount','discount','supplier_email']
-FIELD_VALUE = ['Invoice Date', 'GST','Name', 'Pan Number','Total Tax Amount','Invoice Amount','Discount','Email']
+ACCURACY_FIELD = ['invoice_date', 'supplier_gstin', 'supplier_name', 'pan_number', 'total_tax_amount', 'invoice_amount',
+                  'discount', 'supplier_email']
+FIELD_VALUE = ['Invoice Date', 'GST', 'Name', 'Pan Number', 'Total Tax Amount', 'Invoice Amount', 'Discount', 'Email']
+
+
 class MasterIndiaInstance(models.Model):
     _inherit = "master.india.instance"
 
     def get_file_data(self, file_path):
-        # res = super(MasterIndiaInstance, self).get_file_data(file_path)
-        res = {'status': True, 'message': 'Data Extracted Successfully! and Data Purge is False', 'data': [
-            {'invoice_number': {'value': 'INV/2018/0057', 'accuracy': 89.89}, 'po_number': {'value': '', 'accuracy': 0},
-             'invoice_date': {'value': '09/17/2018', 'accuracy': 90.29},
-             'invoice_due_date': {'value': '30-09-2018', 'accuracy': 88.23},
-             'payment_terms': {'value': '', 'accuracy': 0}, 'irn': {'value': '', 'accuracy': 0},
-             'ewaybill_number': {'value': '', 'accuracy': 0},
-             'supplier_gstin': {'value': '24AAHCB6536E1ZV', 'accuracy': 74.21},
-             'supplier_name': {'value': 'Azure Interior Solutions Private Limited', 'accuracy': 90.73},
-             'pan_number': {'value': 'BE0477.472.701', 'accuracy': 99.9}, 'buyer_gstin': {'value': '', 'accuracy': 0},
-             'buyer_name': {'value': 'Odoo SA', 'accuracy': 78.73}, 'buyer_pan_number': {'value': '', 'accuracy': 0},
-             'ship_to_gstin': {'value': '', 'accuracy': 0}, 'total_taxable': {'value': 541.1, 'accuracy': 99.86},
-             'total_igst': {'value': '', 'accuracy': 0}, 'total_cgst': {'value': '', 'accuracy': 0},
-             'total_sgst': {'value': '', 'accuracy': 0}, 'total_cess': {'value': '', 'accuracy': 0},
-             'total_tax_amount': {'value': '', 'accuracy': 0}, 'invoice_amount': {'value': 541.1, 'accuracy': 80.86},
-             'other_charges': {'value': '', 'accuracy': 0}, 'discount': {'value': '', 'accuracy': 0},
-             'bank_name': {'value': 'Kotak Mahidra Bank', 'accuracy': 56.29},
-             'account_number': {'value': '6912130859', 'accuracy': 99.69},
-             'ifsc_code': {'value': 'KKBK0003551', 'accuracy': 61.91}, 'branch': {'value': '', 'accuracy': 0},
-             'supplier_address': {'value': ' A405 Pushp Business Campus Ahmedabad, Gujarat, 382418', 'accuracy': 91.06},
-             'buyer_address': {'value': ' Chaussée de Namur 40 Grand-Rosière 1367 Belgium', 'accuracy': 83.51},
-             'shipping_address': {'value': '', 'accuracy': 0},
-             'supplier_email': {'value': 'info@azureinterior.com', 'accuracy': 86.75},
-             'qr_supplier_gstin': {'value': '', 'accuracy': 0}, 'qr_buyer_gstin': {'value': '', 'accuracy': 0},
-             'qr_invoice_number': {'value': '', 'accuracy': 0}, 'qr_invoice_value': {'value': '', 'accuracy': 0},
-             'qr_invoice_date': {'value': '', 'accuracy': 0}, 'qr_total_item': {'value': '', 'accuracy': 0},
-             'qr_hsn_code': {'value': '', 'accuracy': 0}, 'qr_hash_code': {'value': '', 'accuracy': 0}}],
-               'table_data': [[[{'key': 0, 'item_quantity': {'value': 1.0, 'accuracy': 99.97},
-                                 'item_unit_price': {'value': 541.1, 'accuracy': 99.98},
-                                 'item_description': {'value': 'Redeem Reference Number: PO02529', 'accuracy': 99.99},
-                                 'item_total_amount': {'value': 54110.0, 'accuracy': 99.95}}]]]}
+        res = super(MasterIndiaInstance, self).get_file_data(file_path)
         _logger.info("Response : {}".format(res))
         self.remove_file_from_local_system(file_path)
         log_id = self.create_log_for_upload(res, file_path.split('/')[-1:][0])
@@ -250,14 +223,14 @@ class MasterIndiaInstance(models.Model):
             'res_id': invoice.id,
         }
 
-    def check_accuracy_and_post_message(self,invoice,data):
-        data = data.get('data',{})
+    def check_accuracy_and_post_message(self, invoice, data):
+        data = data.get('data', {})
         instance = self.get_instance()
         invalid_accuracy = ''
         for invoice_data in data:
             for key in invoice_data.keys():
-                accuracy = invoice_data.get(key,{}).get('accuracy')
-                if key in ACCURACY_FIELD and invoice_data.get(key,{}).get('value') and accuracy < instance.accuracy:
+                accuracy = invoice_data.get(key, {}).get('accuracy')
+                if key in ACCURACY_FIELD and invoice_data.get(key, {}).get('value') and accuracy < instance.accuracy:
                     index = ACCURACY_FIELD.index(key)
                     invalid_accuracy += '<br/> {} : {} '.format(FIELD_VALUE[index], accuracy)
         if invalid_accuracy:
