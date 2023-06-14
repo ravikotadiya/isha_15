@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+
+		<record id="stock_move_wizard_view" model="ir.ui.view">
+			<field name="name">Import Stock Moves</field>
+			<field name="model">stock.move.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+					    <field name="import_option" widget="radio"/>
+						<field name="import_file"/>
+					</group>
+					<group>
+					    <group>
+    					    <field name="import_prod_option" invisible="1" widget="radio"/>
+    					</group>
+    					<group>
+    					    <field name="product_details_option" invisible="1" widget="radio"/>
+    					</group>
+					</group>
+					<group>
+                      <group>
+                          <field name="company_id" readonly="1" options="{'no_open': 1}" />
+                          <field name="down_samp_file" widget="checkbox" />
+                          <field name="sample_option" widget="radio" attrs="{'invisible': [('down_samp_file', '=', False)]}"/>
+                          <button name="download_auto_stock_move" string="Download Sample File" type="object" class="oe_highlight" attrs="{'invisible': [('down_samp_file', '=', False)]}"/>
+                      </group>
+                    </group>
+					<footer>
+						<button string="Import" name="import_stock_move" class="oe_highlight" type="object"/>
+						or
+                        <button name="cancel" string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="import_stock_move_action" model="ir.actions.act_window">
+			<field name="name">Stock Moves Import</field>
+			<field name="res_model">stock.move.wizard</field>
+			<field name="target">new</field>
+			<field name="view_id" ref="stock_move_wizard_view"/>
+			<field name="view_mode">form</field>
+		</record>
+
+		<record id="stock_picking_inherit_view" model="ir.ui.view">
+			<field name="name">Stock Picking</field>
+			<field name="model">stock.picking</field>
+			 <field name="inherit_id" ref="stock.view_picking_form"/>
+			<field name="arch" type="xml">
+				<header>
+					<button name="%(import_stock_move_action)d"
+						string="Import"
+                        type="action"
+						attrs="{'invisible': ['|',('picking_type_code','!=','incoming'),('state', 'not in', ('draft',))]}"
+                        class="btn-primary"/>
+				</header>
+			</field>
+		</record>
+	</data>
+</odoo>

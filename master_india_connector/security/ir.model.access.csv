@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_master_india_instance,access_master_india_instance,model_master_india_instance,,1,1,1,1
+access_upload_file_wizard,access_upload_file_wizard,model_upload_file_wizard,,1,1,1,1
+access_master_india_log,access_master_india_log,model_master_india_log,,1,1,1,0

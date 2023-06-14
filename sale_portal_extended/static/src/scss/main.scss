@@ -1,0 +1,43 @@
+.setu_timeoff_dashboard {
+    display: -webkit-box; display: -webkit-flex; display: flex;
+    justify-content: space-between;
+    height: auto;
+    box-shadow: inset 0 -1px 0 #C9CCD2;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #f6f7fa;
+    .text-odoo {
+      color: #714B67 !important;
+    }
+
+    .setu_timeoff_card {
+        flex-direction: column;
+        flex-grow: 1;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        text-align: center;
+
+        &:not(:last-child) {
+            border-right: 2px solid #C9CCD2;
+        }
+        .setu_timeoff_name {
+            color: #4A4F59;
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+        .setu_timeoff_duration {
+            font-size: 30px;
+            font-weight: bold;
+            img {
+                height: 30px;
+            }
+        }
+        span {
+          line-height: 1;
+        }
+    }
+
+
+}

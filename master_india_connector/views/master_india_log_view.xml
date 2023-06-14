@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="master_india_log_form_view" model="ir.ui.view">
+            <field name="name">master.india.log.form.view</field>
+            <field name="model">master.india.log</field>
+            <field name="arch" type="xml">
+                <form string="Log">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="create_date" readonly="1"/>
+                            <field name="create_uid" readonly="1"/>
+                            <field name="invoice_id" readonly="1"/>
+                            <field name="response" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="maser_india_log_tree_view" model="ir.ui.view">
+            <field name="name">master.india.log.tree</field>
+            <field name="model">master.india.log</field>
+            <field name="arch" type="xml">
+                <tree string="Log" create="false" edit="false">
+                    <field name="name"/>
+                    <field name="create_date"/>
+                    <field name="create_uid"/>
+                    <field name="invoice_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="master_india_log_act_window" model="ir.actions.act_window">
+            <field name="name">Log</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">master.india.log</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no log click here to add new log.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Log" id="master_india_log_menu" parent="master_india_connector.menu_master_india_main"
+                  action="master_india_log_act_window"/>
+
+    </data>
+</odoo>

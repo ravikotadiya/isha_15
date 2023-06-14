@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data >
+	
+		<record id="sample_stock_move_xls" model="ir.attachment">
+	        <field name="name">stock_move.xls</field>
+	        <field name="type">binary</field>
+	        <field name="datas" type="base64" file="import_stock_move/Sample Files/stock_move.xls"/>
+			 <field name="public">True</field>
+	    </record>
+	
+	    <record id="sample_stock_move_csv" model="ir.attachment">
+	        <field name="name">stock_move.csv</field>
+	        <field name="type">binary</field>
+	        <field name="type">binary</field>
+	        <field name="datas" type="base64" file="import_stock_move/Sample Files/stock_move.csv"/>
+			 <field name="public">True</field>
+	    </record>
+	    
+	</data>
+</odoo>

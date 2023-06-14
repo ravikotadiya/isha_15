@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Wizard Form View -->
+    <record id="upload_file_wizard_form" model="ir.ui.view">
+        <field name="name">upload.file.wizard.form</field>
+        <field name="model">upload.file.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Upload File">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="file_data" filename="file_name" widget="binary"
+                                   class="oe_inline" string="Select File"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Import" name="get_file_data" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Remove Comment if you want to use upload functionality in server action -->
+    <!--    <record id="upload_invoice_server_action" model="ir.actions.act_window">-->
+    <!--        <field name="name">Upload</field>-->
+    <!--        <field name="res_model">upload.file.wizard</field>-->
+    <!--        <field name="view_mode">form</field>-->
+    <!--        <field name="view_id" ref="upload_file_wizard_form"/>-->
+    <!--        <field name="target">new</field>-->
+    <!--        <field name="binding_model_id" ref="account.model_account_move"/>-->
+    <!--        <field name="context">{}</field>-->
+    <!--    </record>-->
+
+</odoo>

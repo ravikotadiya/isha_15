@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_layout_extend" name="Quotations Button" inherit_id="portal.portal_searchbar"
+              priority="35">
+        <xpath expr="//form[hasclass('o_portal_search_panel')]" position="after">
+            <div class="ms-lg-2">
+                <span>
+                    <a class="create_quote btn btn-secondary btn-sm" style="color: white;margin: 0em 1em;"
+                       t-if="page_name == 'quote' or sale_order and sale_order.state in ('sent', 'cancel')">
+                        New
+                    </a>
+                </span>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="portal_update_layout_extend" name="Quotations Button" inherit_id="portal.portal_layout"
+              priority="35">
+        <xpath expr="//div[hasclass('o_portal')]/div/div" position="after">
+            <div class="ms-lg-2" style="left: 100px;
+    position: relative;">
+                <span>
+                    <a class="create_quote btn btn-secondary btn-sm" style="color: white;margin: 0em 1em;"
+                       t-if="sale_order and not sale_order.signature">
+                        Update
+                    </a>
+                </span>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('o_portal')]" position="after">
+            <button type="button" class="btn btn-primary d-none open_popup" data-bs-toggle="modal"
+                    data-bs-target="#createquote"/>
+            <div class="modal fade" data-backdrop="static" id="createquote" tabindex="-1"
+                 aria-labelledby="createquoteLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="CredentialModalLabel">Create Order</h5>
+                        </div>
+                        <div class="modal-body form-body">
+                            <div style="margin: 1em 0px;" class="alert alert-primary" role="alert">
+                                Please select the sale order excel sheet
+                            </div>
+                            <form id="quoteform" enctype="multipart/form-data">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                <input required="required" type="file"
+                                       accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                       name="attachment" class="attachment"/>
+                                <!--                                <select name="file_type" style="padding: 5px;width: 50%;">-->
+                                <!--                                    <option value="csv">CSV</option>-->
+                                <!--                                    <option value="xlsx">XlSX</option>-->
+                                <!--                                </select>-->
+                                <input type="hidden" name="sale_order_reference"
+                                       t-att-value="sale_order.id if sale_order else false"/>
+
+                            </form>
+                            <div style="margin: 1em 0px;" class="alert alert-primary" role="alert">
+                                <a style="color: black;
+    text-decoration: underline;" href="/sale_portal_extended/static/src/document/order.xlsx">Download Sale Sample XLSX
+                                    File
+                                </a>
+                            </div>
+                            <div class="status alert alert-secondary d-none" style="color: black;" role="alert">
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary close_quote_form" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="button" class="btn btn-primary submit_quote_form">Import
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+
+</odoo>
